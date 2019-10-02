@@ -1,7 +1,7 @@
 import random
 llista = []
 
-for i in range(10):
-   llista = [1,100]
+for i in range(100):
+   llista = [(1, 100)]
 
  print(llista)
