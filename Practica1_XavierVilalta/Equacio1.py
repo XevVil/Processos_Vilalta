@@ -18,8 +18,11 @@ class EquacioPrimerGrau:
 
         elif operador == "-":
           r=(float(c) + float(b))/ float(a)
+
+        else :
+            print("Error")
         print("X = "+str(r))
-        return r
+        return r    
 
 
 eq = EquacioPrimerGrau("2x + 3 = 7")
