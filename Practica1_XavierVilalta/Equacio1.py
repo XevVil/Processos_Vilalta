@@ -12,14 +12,15 @@ class EquacioPrimerGrau:
         c = h[4]
         print(self.s_eq)
 
-        if (operador == "+"):
+        if operador == "+":
           r = (float(c) - float(b))/float(a)
-          print(r)
-
-        if (operador == "-"):
-            r=(float(c) + float(b))/ float(a)
-            print(r)
 
 
+        elif operador == "-":
+          r=(float(c) + float(b))/ float(a)
+        print("X = "+str(r))
+        return r
 
- ## 20x + 30 = 70 /// 20x - 70 = -30
+
+eq = EquacioPrimerGrau("2x + 3 = 7")
+eq.calcula()
