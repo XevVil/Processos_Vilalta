@@ -202,12 +202,19 @@ def main():
     clock = pygame.time.Clock()
 
     # main loop
+    max = 0
+    time = 0
     running = True
     while running:
+        if time == 15 and max <= 15:
+            asteroid = Asteroid((random.randint(0,900),random.randint(0,900)))
+            world.sprites.add(asteroid)
+            max = max +1
+            time = 0
+            # handle our events
+
         events = pygame.event.get()
-        asteroid = Asteroid((random.randint(0,900),random.randint(0,900)))
-        world.sprites.add(asteroid)
-        # handle our events
+
         for event in events:
             if event.type == QUIT:
                 running = False
@@ -219,6 +226,7 @@ def main():
         world.render()
         pygame.display.flip()
         clock.tick(40)
+        time = time + 1
 
 
 if __name__ == "__main__":
