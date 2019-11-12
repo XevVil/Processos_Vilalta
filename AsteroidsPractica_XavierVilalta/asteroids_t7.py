@@ -183,6 +183,27 @@ class Asteroid(Entity):
         self.orig_image = pygame.image.load('assets/asteroid.png')
         super(Asteroid, self).__init__(self.orig_image, position)
         self.motion = Vector(random.randint(-5, 5),random.randint(-5, 5))
+        self.duration = 100
+
+    def update(self):
+        self.duration = self.duration-1
+        if self.duration == 0:
+            self.kill()
+
+class Bullet(Entity):
+    """ represents the bullet """
+    def __init__(self, position, direction, magnitude):
+        self.orig_image = pygame.image.load('assets/bullet.png')
+        super(Bullet, self).__init__(self.orig_image, position)
+        self.motion = Vector.from_degrees(direction,magnitude)
+        self.duration = 100
+
+    def update(self):
+        self.duration = self.duration-1
+        if self.duration == 0:
+            self.kill()
+
+
 
 def main():
     """ runs our application """
@@ -206,9 +227,11 @@ def main():
     time = 0
     running = True
     while running:
-        if time == 15 and max <= 15:
+        if time == 15 and max <= 30:
             asteroid = Asteroid((random.randint(0,900),random.randint(0,900)))
             world.sprites.add(asteroid)
+            bullet = Bullet((60,60),60.0,50)
+            world.sprites.add(bullet)
             max = max +1
             time = 0
             # handle our events
