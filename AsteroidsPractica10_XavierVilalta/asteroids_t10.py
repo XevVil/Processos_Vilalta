@@ -93,7 +93,7 @@ class World(object):
         if event.key == pygame.K_RIGHT:
             self.player.turn_right = False
         if event.key == pygame.K_SPACE:
-            bullet = Bullet((Vector(*self.player.rect.center)-self.player.facing*2).to_position(),self.player.facing.to_degrees()[0]+180,self.player.motion.magnitude() + 10)
+            bullet = Bullet((Vector(*self.player.rect.center)-self.player.facing*2).to_position(),self.player.facing.to_degrees()[0]+180,self.player.motion.magnitude() + 8)
             self.sprites.add(bullet)
 class Vector(object):
 
