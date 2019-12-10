@@ -246,9 +246,8 @@ def colisio_tret():
         for l in ([x for x in world.sprites if isinstance(x, Bullet)]):
             if abs(i.rect.center[0]-l.rect.center[0])<15:
                 if abs(i.rect.center[1]-l.rect.center[1])<15:
-                    i.duration = 0
-                    l.duration = 0
-
+                    i.kill()
+                    l.kill()
 
 semafor = Semaphore(value = 1)
 def update_collisions():
