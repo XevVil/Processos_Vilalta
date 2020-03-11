@@ -117,25 +117,41 @@ def LoadOtherEntry(ChatLog, EntryText):
             ChatLog.config(state=DISABLED)
             ChatLog.yview(END)
 
-def send_image(s, path):
-
-    im = open('/home/xavier/Imatges/horitzontal.png', 'rb')
-    data = im.read()
-    c_data = data.encode('base64')
-    size = len(c_data)
-    s.sendall('/image '+ str(size))
+def send_image(msg,s):
+    print "ENVIANDO IMAGEN"
+    print "1--------------->"+msg[0]
+    print "1--------------->"+msg[1]
+    f1 = open( msg[1], 'rb')
+    data = f1.read()
+    c_f1 = data.encode('base64')
+    size = len(c_f1)
+    s.sendall('/image ' + str(size))
     time.sleep(1)
-    s.sendall('/image '+ str(c_data))
+    print c_f1
+    s.sendall('/image ' + c_f1)
 
+def Recive_image(EntryText,s):
+    path ="imatge.png"
+    msg = EntryText.split()
 
-def Recvive_image(s, size):
-    im = open('aa.png', 'wb')
+    img = open(path,'wb')
     r_size = 0
-    [com,size] = m.split()
-    t = s.recv(4096000)
-    d_im = t.split('')[-1]
 
-    while r_size < int(size):
-        d_im = d_im + t
-    im.write(d_im.decode('base64'))
-    im.close()
+    data = s.recv(4096000)
+
+    c_img = data.split('/image ')[-1]
+    print data
+    img.write(c_img.decode('base64'))
+    size = int(msg[1])
+    print size,len(c_img)
+    r_size = len(c_img)
+
+    while r_size < size:
+        print size,len(c_img)
+        t = s.recv(4096000)
+        d = t.decode('base64')
+        img.write(d)
+        r_size += len(t)
+
+    img.close()
+    return '/image ' + path

@@ -1,7 +1,7 @@
 import socket, threading
 import base64
 
-from ChatFns import HOST, PORT, Recvive_image, send_image
+from ChatFns import HOST, PORT, Recive_image, send_image
 
 def accept_client():
     while True:
@@ -17,11 +17,10 @@ def accept_client():
 def broadcast_usr(uname, cli_sock):
     while True:
         try:
-            data = cli_sock.recv(1024)
+            data = cli_sock.recv(4096000)
             if data:
                 if "/image" in data:
-                    im = data.split(' ')[:-1]
-                    Recvive_image(ser_sock, im)
+                    data = Recive_image(data, ser_sock)
 
                 print "{0} spoke {1}".format(uname, data)
                 b_usr(cli_sock, uname, data)
@@ -36,10 +35,12 @@ def broadcast_usr(uname, cli_sock):
 def b_usr(cs_sock, sen_name, msg):
     for client in CONNECTION_LIST:
         if client[1] != cs_sock:
-            client[1].send(sen_name + ':' + msg)
-            if "/image" in data:
-                msg = EntryText.split(' ')[:-1]
-                send_image(ser_sock, msg)
+            if "/image" in msg:
+                msg2 = msg.split()[:-1]
+                send_image(client[1], msg2)
+            else:
+                client[1].send(sen_name + ':' + msg)
+
 
             #client[1].send(msg)
 
@@ -54,8 +55,8 @@ if __name__ == "__main__":
     ser_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     # bind
-    HOST = 'localhost'
-    PORT = 50010
+    #HOST = 'localhost'
+    #PORT = 50010
     ser_sock.bind((HOST, PORT))
 
     # listen

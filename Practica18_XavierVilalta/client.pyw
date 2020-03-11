@@ -27,11 +27,13 @@ def ClickAction():
     EntryBox.delete("0.0",END)
 
     #Send my mesage to all others
-    if "/image" in EntryText:
-        im = EntryText.split(' ')[:-1]
-        send_image(s, im)
+    if (EntryText.startswith('/image')):
+        im = EntryText.split()
+        send_image(im, s)
+
     else:
         s.sendall(EntryText)
+
 
 
     if EntryText[:-1] == "bye":
@@ -105,10 +107,13 @@ def ReceiveData():
             LoadConnectionInfo(ChatLog, '\n [ Your partner has disconnected ] \n')
             break
         if data != '':
-            LoadOtherEntry(ChatLog, data)
-            if "/image" in data:
+            if (data.startswith('/image')) :
                 im = data.split(' ')[:-1]
                 Recvive_image(s, im)
+
+            else:
+                LoadOtherEntry(ChatLog, data)
+
 
             if base.focus_get() == None:
                 FlashMyWindow(WindowTitle)
