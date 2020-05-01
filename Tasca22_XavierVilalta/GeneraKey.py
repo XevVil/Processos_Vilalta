@@ -17,7 +17,6 @@ from Crypto import Random
 
 def GeneraClau():
 
-#Se crea la RSA Key
 
     clau = RSA.generate(2048)
     return clau
@@ -26,20 +25,16 @@ def GeneraClau():
 
 def ExportaClau(path, clau):
 
-#Exporta la key
     exporta = clau.exportKey('PEM')
-#Abrimos/Creamos archivo .pem
     exportaFitxer = open(path+ ".pem", "wb")
-#Escribimos en el archivo .pem
     exportaFitxer.write(exporta)
-#Cerramos archivo
     exportaFitxer.close()
 
 #---------------------3-------------------
 
 def ImportaClau(path):
 
-#Import la clau
+#Importa la clau
     return RSA.import_key(open(path).read())
 
 #---------------------4-------------------
